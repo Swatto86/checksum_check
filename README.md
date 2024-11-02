@@ -1,4 +1,4 @@
-# Checksum Verifier
+# Checksum Check
 
 A modern, cross-platform desktop application for verifying file checksums, built with Tauri and React. This tool provides a user-friendly interface for calculating and verifying file hashes, essential for ensuring file integrity.
 
@@ -41,7 +41,7 @@ Download the latest release for your platform from the [Releases](https://github
 
    ```bash
    git clone https://github.com/yourusername/checksum_check.git
-   cd checksum_verifier
+   cd checksum_check
    ```
 
 2. Install dependencies
