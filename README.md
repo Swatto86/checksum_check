@@ -25,7 +25,7 @@ A modern, cross-platform desktop application for verifying file checksums, built
 
 ### From Releases
 
-Download the latest release for your platform from the [Releases](https://github.com/yourusername/checksum-verifier/releases) page.
+Download the latest release for your platform from the [Releases](https://github.com/yourusername/checksum_check/releases) page.
 
 ### Build from Source
 
@@ -40,8 +40,8 @@ Download the latest release for your platform from the [Releases](https://github
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/yourusername/checksum-verifier.git
-   cd checksum-verifier
+   git clone https://github.com/yourusername/checksum_check.git
+   cd checksum_verifier
    ```
 
 2. Install dependencies
