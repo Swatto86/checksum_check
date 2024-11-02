@@ -5,7 +5,7 @@ A modern, cross-platform desktop application for verifying file checksums, built
 ## Features
 
 - **Multiple Hash Algorithms:** MD5, SHA-1, SHA-256, SHA-512
-- **User-Friendly Interface:** Native file picker dialog, copy hash results to clipboard, clear visual feedback for hash verification.
+- **User-Friendly Interface:** Native file picker dialog and drag and drop support, copy hash results to clipboard, clear visual feedback for hash verification.
 - **Performance:** Fast hash calculation using Rust's native cryptography libraries, efficient handling of large files, non-blocking UI during hash calculations.
 
 ## Version Information
