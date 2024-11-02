@@ -1,0 +1,58 @@
+# Build directories
+/dist
+/src-tauri/target
+/src-tauri/gen
+.output
+.tauri
+
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Development environment
+.env
+.env.*
+!.env.example
+
+# IDE specific
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Rust specific
+Cargo.lock
+/src-tauri/WixTools
+**/*.rs.bk
+
+# TypeScript
+*.tsbuildinfo
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Testing
+/coverage
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
