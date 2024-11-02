@@ -1,4 +1,5 @@
 import { ChecksumDisplay } from './components/ChecksumDisplay';
+import { HashtagIcon } from './components/HashtagIcon';
 
 function App() {
   return (
@@ -6,9 +7,15 @@ function App() {
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="space-y-6 animate-fade-in">
           <div className="text-center space-y-2">
-            <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 inline-block">
-              Checksum Check
-            </h1>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <HashtagIcon 
+                size={40} 
+                className="text-blue-400" 
+              />
+              <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 inline-block">
+                Checksum Check
+              </h1>
+            </div>
             <div className="space-y-2">
               <p className="text-gray-300 text-lg">
                 Select or drop a file to calculate its checksums
