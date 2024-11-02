@@ -11,7 +11,6 @@ A modern, cross-platform desktop application for verifying file checksums, built
   - SHA-512
 
 - **User-Friendly Interface**
-  - Drag and drop file support
   - Native file picker dialog
   - Copy hash results to clipboard
   - Clear visual feedback for hash verification
@@ -22,10 +21,6 @@ A modern, cross-platform desktop application for verifying file checksums, built
   - Non-blocking UI during hash calculations
 
 ## Installation
-
-### From Releases
-
-Download the latest release for your platform from the [Releases](https://github.com/yourusername/checksum_check/releases) page.
 
 ### Build from Source
 
@@ -40,7 +35,7 @@ Download the latest release for your platform from the [Releases](https://github
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/yourusername/checksum_check.git
+   git clone https://github.com/Swatto86/checksum_check.git
    cd checksum_check
    ```
 
