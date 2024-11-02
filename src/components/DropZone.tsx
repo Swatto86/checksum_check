@@ -1,7 +1,7 @@
-import { useState, DragEvent, useCallback } from 'react';
-import { convertFileSrc } from '@tauri-apps/api/tauri';
+import { useState, useEffect } from 'react';
 import { open } from '@tauri-apps/api/dialog';
 import { Upload, Loader2 } from 'lucide-react';
+import { listen } from '@tauri-apps/api/event';
 
 interface DropZoneProps {
   onFileDrop: (filePath: string) => void;
@@ -12,19 +12,38 @@ export function DropZone({ onFileDrop, isLoading }: DropZoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleDragOver = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  }, []);
+  useEffect(() => {
+    console.log('Setting up Tauri file drop listeners');
 
-  const handleDragLeave = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  }, []);
+    const unlisten = listen('tauri://file-drop', (event: any) => {
+      console.log('Tauri file drop event:', event);
+      const paths = event.payload as string[];
+      
+      if (paths.length > 0) {
+        console.log('File dropped:', paths[0]);
+        onFileDrop(paths[0]);
+      }
+    });
+
+    const unlistenHover = listen('tauri://file-drop-hover', () => {
+      console.log('File hover detected');
+      setIsDragging(true);
+    });
+
+    const unlistenCancelled = listen('tauri://file-drop-cancelled', () => {
+      console.log('File drop cancelled');
+      setIsDragging(false);
+    });
+
+    return () => {
+      unlisten.then(f => f());
+      unlistenHover.then(f => f());
+      unlistenCancelled.then(f => f());
+    };
+  }, [onFileDrop]);
 
   const handleFileSelect = async () => {
+    console.log('File picker clicked');
     try {
       const selected = await open({
         multiple: false,
@@ -34,72 +53,66 @@ export function DropZone({ onFileDrop, isLoading }: DropZoneProps) {
       });
 
       if (selected && typeof selected === 'string') {
+        console.log('File selected:', selected);
         onFileDrop(selected);
       }
     } catch (err) {
-      console.error('Error:', err);
-      setError(err as string);
+      console.error('Error in file select:', err);
+      setError(typeof err === 'string' ? err : 'Failed to open file dialog');
     }
   };
 
-  const handleDrop = useCallback(async (e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    setError(null);
-
-    const files = Array.from(e.dataTransfer?.files || []);
-    
-    if (files.length === 0) {
-      return;
-    }
-
-    const file = files[0];
-    
-    try {
-      if ('path' in file) {
-        const filePath = (file as any).path;
-        const tauriPath = await convertFileSrc(filePath);
-        onFileDrop(tauriPath);
-      } else {
-        throw new Error('File path not available');
-      }
-    } catch (error) {
-      console.error('Error handling file:', error);
-      setError(typeof error === 'string' ? error : 'Could not process file');
-    }
-  }, [onFileDrop]);
-
   return (
     <div className="space-y-4">
-      <div
+      <div 
         onClick={!isLoading ? handleFileSelect : undefined}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
         className={`
-          relative border-2 border-dashed rounded-xl p-12
+          relative overflow-hidden rounded-xl
           transition-all duration-300 ease-in-out
-          ${isLoading ? 'cursor-not-allowed opacity-75' : 'cursor-pointer hover:scale-[1.01]'}
-          ${isDragging 
-            ? 'border-blue-400 bg-blue-500/10 scale-[1.02]' 
-            : 'border-gray-700 hover:border-gray-500 hover:bg-gray-800/50'
-          }
+          ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer hover:scale-[1.01]'}
         `}
       >
-        <div className="flex flex-col items-center justify-center space-y-4">
-          {isLoading ? (
-            <Loader2 className="w-12 h-12 text-blue-400 animate-spin" />
-          ) : (
-            <Upload className={`w-12 h-12 transition-colors duration-200 ${isDragging ? 'text-blue-400' : 'text-gray-400'}`} />
-          )}
-          <div className="text-center">
-            <p className="text-lg font-medium text-gray-300 mb-2">
-              {isLoading ? 'Processing...' : 'Drop your file here'}
-            </p>
-            <p className="text-sm text-gray-500">
-              {isLoading ? 'Please wait while we calculate checksums' : 'or click to browse'}
-            </p>
+        {/* Background layer */}
+        <div className={`
+          absolute inset-0 transition-opacity duration-300
+          ${isDragging 
+            ? 'opacity-100 bg-gradient-to-b from-blue-500/10 to-purple-500/10' 
+            : 'opacity-0 bg-gray-800/50'
+          }
+        `} />
+
+        {/* Border layer */}
+        <div className={`
+          absolute inset-0 transition-opacity duration-300
+          border-2 rounded-xl
+          ${isDragging 
+            ? 'border-blue-400/50 opacity-100' 
+            : 'border-gray-700 opacity-50 hover:opacity-100 hover:border-gray-600'
+          }
+        `} />
+
+        {/* Content */}
+        <div className="relative px-8 py-12">
+          <div className="flex flex-col items-center justify-center space-y-4">
+            {isLoading ? (
+              <Loader2 className="w-12 h-12 text-blue-400 animate-spin" />
+            ) : (
+              <Upload 
+                className={`w-12 h-12 transition-colors duration-300 
+                  ${isDragging ? 'text-blue-400' : 'text-gray-400 group-hover:text-gray-300'}`} 
+              />
+            )}
+            <div className="text-center">
+              <p className={`
+                text-lg font-medium mb-2 transition-colors duration-300
+                ${isDragging ? 'text-blue-300' : 'text-gray-300'}
+              `}>
+                {isLoading ? 'Processing...' : 'Drop your file here'}
+              </p>
+              <p className="text-sm text-gray-500">
+                {isLoading ? 'Please wait while we calculate checksums' : 'or click to browse'}
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -23,10 +23,15 @@
         "all": false,
         "readFile": true,
         "readDir": true,
-        "exists": true
+        "exists": true,
+        "scope": ["**"]
       },
       "path": {
         "all": true
+      },
+      "protocol": {
+        "asset": true,
+        "assetScope": ["**"]
       }
     },
     "bundle": {
@@ -63,10 +68,8 @@
       }
     },
     "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
+      "csp": "default-src 'self' asset: https://asset.localhost",
+      "dangerousDisableAssetCspModification": true
     },
     "windows": [
       {
@@ -75,7 +78,8 @@
         "resizable": true,
         "title": "Checksum Check",
         "width": 800,
-        "center": true
+        "center": true,
+        "fileDropEnabled": true
       }
     ]
   }
