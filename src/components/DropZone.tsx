@@ -1,6 +1,7 @@
 import { useState, DragEvent, useCallback } from 'react';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
 import { open } from '@tauri-apps/api/dialog';
+import { Upload, Loader2 } from 'lucide-react';
 
 interface DropZoneProps {
   onFileDrop: (filePath: string) => void;
@@ -77,26 +78,34 @@ export function DropZone({ onFileDrop, isLoading }: DropZoneProps) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`
-          border-2 border-dashed rounded-lg p-12 text-center
-          transition-colors duration-200 
-          ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}
+          relative border-2 border-dashed rounded-xl p-12
+          transition-all duration-300 ease-in-out
+          ${isLoading ? 'cursor-not-allowed opacity-75' : 'cursor-pointer hover:scale-[1.01]'}
           ${isDragging 
-            ? 'border-blue-500 bg-blue-500/10' 
-            : 'border-gray-700 hover:border-gray-600'
+            ? 'border-blue-400 bg-blue-500/10 scale-[1.02]' 
+            : 'border-gray-700 hover:border-gray-500 hover:bg-gray-800/50'
           }
         `}
       >
-        <div className="text-4xl mb-4">📄</div>
-        <p className="text-gray-400 mb-2">
-          {isLoading ? 'Processing...' : 'Click or drop a file here to calculate its checksums'}
-        </p>
-        <p className="text-gray-500 text-sm">
-          Files are processed locally - nothing is uploaded
-        </p>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          {isLoading ? (
+            <Loader2 className="w-12 h-12 text-blue-400 animate-spin" />
+          ) : (
+            <Upload className={`w-12 h-12 transition-colors duration-200 ${isDragging ? 'text-blue-400' : 'text-gray-400'}`} />
+          )}
+          <div className="text-center">
+            <p className="text-lg font-medium text-gray-300 mb-2">
+              {isLoading ? 'Processing...' : 'Drop your file here'}
+            </p>
+            <p className="text-sm text-gray-500">
+              {isLoading ? 'Please wait while we calculate checksums' : 'or click to browse'}
+            </p>
+          </div>
+        </div>
       </div>
       
       {error && (
-        <div className="p-4 bg-red-900/50 rounded-lg">
+        <div className="p-4 bg-red-900/50 rounded-lg animate-fade-in">
           <p className="text-red-200">{error}</p>
         </div>
       )}
