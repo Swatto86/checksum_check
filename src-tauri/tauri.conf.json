@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "Checksum Check",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "tauri": {
     "allowlist": {
@@ -79,7 +79,11 @@
         "title": "Checksum Check",
         "width": 800,
         "center": true,
-        "fileDropEnabled": true
+        "fileDropEnabled": true,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "label": "main"
       }
     ]
   }
