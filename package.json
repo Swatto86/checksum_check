@@ -1,7 +1,7 @@
 {
   "name": "checksum_check",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -11,7 +11,8 @@
     "tauri dev": "tauri dev",
     "tauri build": "tauri build",
     "clean": "powershell -File .\\clean-rebuild.ps1",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "update-version": "node update-version.js"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.5.3",

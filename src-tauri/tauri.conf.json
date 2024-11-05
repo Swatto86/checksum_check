@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "Checksum Check",
-    "version": "0.2.0"
+    "version": "1.2.0"
   },
   "tauri": {
     "allowlist": {
@@ -36,8 +36,8 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+      "category": "Utility",
+      "copyright": "Copyright (c) 2024 Checksum Check. MIT License.",
       "deb": {
         "depends": []
       },
@@ -50,26 +50,36 @@
         "icons/icon.ico"
       ],
       "identifier": "com.checksum-check.dev",
-      "longDescription": "",
+      "longDescription": "A desktop application for calculating and verifying file checksums using MD5, SHA1, SHA256, and SHA512.",
+      "shortDescription": "File checksum calculator and verifier",
       "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
         "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
+        "minimumSystemVersion": "10.13",
+        "exceptionDomain": "",
+        "signingIdentity": null,
+        "entitlements": null,
+        "providerShortName": null
       },
       "resources": [],
-      "shortDescription": "",
-      "targets": "all",
+      "targets": ["deb", "msi", "dmg", "updater"],
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "http://timestamp.digicert.com",
+        "wix": {
+          "language": "en-US"
+        }
       }
     },
     "security": {
       "csp": "default-src 'self' asset: https://asset.localhost",
       "dangerousDisableAssetCspModification": true
+    },
+    "updater": {
+      "active": false,
+      "endpoints": [],
+      "dialog": true,
+      "pubkey": ""
     },
     "windows": [
       {
