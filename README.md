@@ -10,10 +10,10 @@ A modern, cross-platform desktop application for verifying file checksums, built
 
 ## Version Information
 
-- **Application Version:** 0.1.0 (This can be dynamically generated during the build process)
-- **Tauri Version:** 1.5.4 (From `src-tauri/Cargo.toml`)
-- **React Version:** 18.2.0 (From `package.json`)
-- **Vite Version:** 5.0.0 (From `package.json`)
+Application Version: 1.2.0 (Current release version)
+Tauri Version: ^1.5.4
+React Version: ^18.2.0
+Vite Version: ^5.0.0
 
 ## Installation
 

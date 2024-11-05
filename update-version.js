@@ -38,6 +38,16 @@ try {
   writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
   console.log('Updated package.json');
 
+  // Update README.md (in root directory)
+  const readmePath = join(__dirname, 'README.md');
+  let readmeContent = readFileSync(readmePath, 'utf8');
+  readmeContent = readmeContent.replace(
+    /- \*\*Application Version:\*\* (.*?) \(/,
+    `- **Application Version:** ${newVersion} (`
+  );
+  writeFileSync(readmePath, readmeContent);
+  console.log('Updated README.md');
+
   console.log(`\nSuccessfully updated version to ${newVersion} in all configuration files`);
 } catch (error) {
   console.error('Error updating version numbers:', error.message);

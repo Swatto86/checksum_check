@@ -24,14 +24,18 @@
         "readFile": true,
         "readDir": true,
         "exists": true,
-        "scope": ["**"]
+        "scope": [
+          "**"
+        ]
       },
       "path": {
         "all": true
       },
       "protocol": {
         "asset": true,
-        "assetScope": ["**"]
+        "assetScope": [
+          "**"
+        ]
       }
     },
     "bundle": {
@@ -61,7 +65,12 @@
         "providerShortName": null
       },
       "resources": [],
-      "targets": ["deb", "msi", "dmg", "updater"],
+      "targets": [
+        "deb",
+        "msi",
+        "dmg",
+        "updater"
+      ],
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
